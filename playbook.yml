@@ -1,0 +1,13 @@
+- hosts: all
+  sudo: true
+  tasks:
+  - name: Import the public key used by the package management system
+    shell: 'sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927'
+  - name: Create a /etc/apt/sources.list.d/mongodb-org-3.2.list file for MongoDB
+    shell: 'echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list'
+  - name: Reload local package database.
+    shell: 'sudo apt-get update -y'
+  - name: Install the MongoDB packages
+    shell: 'sudo apt-get install -y mongodb-org'
+  - name: Start MongoDB.
+    shell: 'sudo service mongod start'
